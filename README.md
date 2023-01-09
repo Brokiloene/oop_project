@@ -1,1 +1,1 @@
-![alt text](/oop_project/Diagram.jpg)
+![alt text](/Diagram.jpg)
