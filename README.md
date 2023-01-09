@@ -1,1 +1,1 @@
-![alt text](https://github.com/Brokiloene/oop_project/blob/dev/Diagram.jpg)
+![alt text](/oop_project/Diagram.jpg)
