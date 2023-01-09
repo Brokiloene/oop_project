@@ -5,7 +5,7 @@
 ![alt text](/example.png)
 
 ### Структура
-Нейронная сеть -- finetune ruGPT3Small, с помощью [датасета](/dataset/recipes.txt). [Парсер](/train/parser2.py). [JupyterNotebook](/train/notebook.ipynb)  
+Нейронная сеть -- finetune ruGPT3Small. [Датасет](/dataset/recipes.txt). [Парсер](/train/parser2.py). [JupyterNotebook](/train/notebook.ipynb)  
 [Скрипт](/model/model.py), генерирующий рецепты  
 [Телеграм-бот](/tgbot/bot.py)  
 
