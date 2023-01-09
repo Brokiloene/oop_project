@@ -1,6 +1,8 @@
 import random
 import re
+from functools import partial
 
+import pika
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 
@@ -35,3 +37,29 @@ def preparation(text):
         .replace('! ', '!').replace('!', '! ').replace('? ', '?').replace('?', '? ').replace('  ', ' ') \
         .replace(' :', ':').replace('twodots', '..').replace('threedots', '...')
     return text
+
+def main():
+    model = RecipeModel()
+
+    def on_request_message_received(model, ch, method, properties, body):
+        body_str = body.decode("utf-8")
+        print(f"Received Request: {body_str}")
+        answer = preparation(model.generate_text(body_str))
+        print("answer ", answer)
+        ch.basic_publish('', routing_key=properties.reply_to, body=answer)
+
+    connection_parameters = pika.ConnectionParameters('rabbit')
+    connection = pika.BlockingConnection(connection_parameters)
+
+    channel = connection.channel()
+    channel.queue_declare(queue='request-queue')
+    channel.basic_consume(queue='request-queue', auto_ack=True,
+                          on_message_callback=partial(on_request_message_received, model))
+
+    print("Starting Server")
+
+    channel.start_consuming()
+
+
+if __name__ == '__main__':
+    main()
